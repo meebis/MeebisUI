@@ -23,8 +23,13 @@ public class MeebisUI {
         INSTANCE = new MeebisUI();
     }
 
+    /**
+     * This needs to be called at some point
+     * in order to initialize the MeebisUI
+     * @param plugin
+     */
     public void loadPlugin(JavaPlugin plugin) {
-        Bukkit.getPluginManager().registerEvents(new PlayerInventoryClickListener(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(), plugin);
     }
 
     public static MeebisUI INSTANCE() {
