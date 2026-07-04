@@ -25,7 +25,7 @@ public class FunctionalItem {
      * This item cannot be taken out of the inventory
      * because it executes a player direct action
      *
-     * @param itemStack the itemStack, cannot be null
+     * @param itemStack   the itemStack, cannot be null
      * @param clickAction the player direct action, cannot be null else use this#ofEmpty
      * @return a FunctionalItem instance with given clickAction
      */

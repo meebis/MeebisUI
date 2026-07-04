@@ -1,12 +1,13 @@
 package com.github.meebisui.test;
 
-import com.github.meebisui.inventory.item.FunctionalItem;
 import com.github.meebisui.inventory.MeebisInventory;
+import com.github.meebisui.inventory.item.FunctionalItem;
 import com.github.meebisui.inventory.pagination.Pagination;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 

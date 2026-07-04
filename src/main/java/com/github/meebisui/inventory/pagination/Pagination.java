@@ -1,9 +1,11 @@
 package com.github.meebisui.inventory.pagination;
 
 import com.github.meebisui.inventory.item.FunctionalItem;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 

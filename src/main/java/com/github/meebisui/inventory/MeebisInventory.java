@@ -11,39 +11,30 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 
 @Accessors(fluent = true)
 public abstract class MeebisInventory {
 
     private final Component title;
     private final int rows;
-
-    private Pagination pagination;
-
     private final Inventory bukkitInventory;
-
     private final List<FunctionalItem> functionalItemList = new ArrayList<>();
-
     private final Map<Integer, FunctionalItem> functionalItemsBySlot = new HashMap<>();
+    private Pagination pagination;
 
     public MeebisInventory(@NotNull Component title, int rows) {
         this.title = title;
         this.rows = rows;
-        this.bukkitInventory = Bukkit.createInventory(null, 3*rows, title.insertion());
+        this.bukkitInventory = Bukkit.createInventory(null, 3 * rows, title);
     }
 
     public void openInventory(@NotNull Player player) {
-        if(MeebisUI.INSTANCE.meebisInventoryTrack().containsKey(player)) {
+        if (MeebisUI.INSTANCE.meebisInventoryTrack().containsKey(player)) {
             MeebisUI.INSTANCE.meebisInventoryTrack().remove(player);
         }
 
-        if(this.pagination != null) {
+        if (this.pagination != null) {
             int start = this.pagination.startSlot();
             int end = start + this.pagination.pageSize();
             int page = this.pagination.currentPage();
@@ -80,7 +71,7 @@ public abstract class MeebisInventory {
     }
 
     public void withItem(@NotNull FunctionalItem functionalItem, int row, int column) {
-        if(row < 0 || column < 0) {
+        if (row < 0 || column < 0) {
             throw new RuntimeException("The row or column of a MeebisInventory cannot be less than 0.");
         }
 
@@ -91,7 +82,7 @@ public abstract class MeebisInventory {
     }
 
     public void fillInventory(@NotNull ItemStack itemStack) {
-        for (int i = 0; i < rows*9; i++) {
+        for (int i = 0; i < rows * 9; i++) {
             this.bukkitInventory.setItem(i, itemStack);
         }
     }
@@ -99,7 +90,7 @@ public abstract class MeebisInventory {
     public void withPagination(@NotNull Pagination pagination) {
         this.pagination = pagination;
 
-        if(this.pagination.pageSize() < 1) {
+        if (this.pagination.pageSize() < 1) {
             throw new RuntimeException("A pagination's pageSize cannot be smaller than 1");
         }
     }
@@ -108,7 +99,7 @@ public abstract class MeebisInventory {
         return this.functionalItemsBySlot.get(slot);
     }
 
-    public boolean isMeebisInventory(String inventoryTitle) {
+    public boolean isMeebisInventory(Component inventoryTitle) {
         return this.title.equals(inventoryTitle);
     }
 
