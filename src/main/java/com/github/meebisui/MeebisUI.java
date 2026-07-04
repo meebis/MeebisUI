@@ -13,21 +13,24 @@ import java.util.Map;
 
 @Getter
 @Accessors(fluent = true)
-public class MeebisUI extends JavaPlugin {
+public class MeebisUI {
 
-    public static MeebisUI INSTANCE;
+    private static MeebisUI INSTANCE;
 
     private final Map<Player, MeebisInventory> meebisInventoryTrack = Maps.newHashMap();
 
-    @Override
-    public void onEnable() {
-        INSTANCE = this;
-
-        Bukkit.getPluginManager().registerEvents(new PlayerInventoryClickListener(), this);
+    public MeebisUI() {
+        INSTANCE = new MeebisUI();
     }
 
-    @Override
-    public void onDisable() {
-        INSTANCE = null;
+    public void loadPlugin(JavaPlugin plugin) {
+        Bukkit.getPluginManager().registerEvents(new PlayerInventoryClickListener(), plugin);
+    }
+
+    public static MeebisUI INSTANCE() {
+        if(INSTANCE == null) {
+            INSTANCE = new MeebisUI();
+        }
+        return INSTANCE;
     }
 }

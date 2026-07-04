@@ -30,8 +30,8 @@ public abstract class MeebisInventory {
     }
 
     public void openInventory(@NotNull Player player) {
-        if (MeebisUI.INSTANCE.meebisInventoryTrack().containsKey(player)) {
-            MeebisUI.INSTANCE.meebisInventoryTrack().remove(player);
+        if (MeebisUI.INSTANCE().meebisInventoryTrack().containsKey(player)) {
+            MeebisUI.INSTANCE().meebisInventoryTrack().remove(player);
         }
 
         if (this.pagination != null) {
@@ -62,12 +62,12 @@ public abstract class MeebisInventory {
         }
 
         player.openInventory(this.bukkitInventory);
-        MeebisUI.INSTANCE.meebisInventoryTrack().put(player, this);
+        MeebisUI.INSTANCE().meebisInventoryTrack().put(player, this);
     }
 
     public void closeInventory(@NotNull Player player) {
         player.closeInventory();
-        MeebisUI.INSTANCE.meebisInventoryTrack().remove(player);
+        MeebisUI.INSTANCE().meebisInventoryTrack().remove(player);
     }
 
     public void withItem(@NotNull FunctionalItem functionalItem, int row, int column) {
