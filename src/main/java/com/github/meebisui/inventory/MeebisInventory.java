@@ -26,7 +26,7 @@ public abstract class MeebisInventory {
     public MeebisInventory(@NotNull Component title, int rows) {
         this.title = title;
         this.rows = rows;
-        this.bukkitInventory = Bukkit.createInventory(null, 3 * rows, title);
+        this.bukkitInventory = Bukkit.createInventory(null, rows * 9, title);
     }
 
     public void openInventory(@NotNull Player player) {
