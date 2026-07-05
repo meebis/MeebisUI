@@ -91,7 +91,7 @@ public abstract class MeebisInventory {
             final int slotIndex = slot;
 
             boolean ignored = Arrays.stream(this.pagination.ignoredSlots())
-                    .anyMatch(s -> s == slotIndex);
+                    .anyMatch(s -> s.slot() == slotIndex);
             if (ignored) continue;
 
             this.bukkitInventory.clear(slotIndex);
