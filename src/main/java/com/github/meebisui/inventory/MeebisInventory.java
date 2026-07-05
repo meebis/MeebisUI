@@ -71,11 +71,13 @@ public abstract class MeebisInventory {
     }
 
     public void withItem(@NotNull FunctionalItem functionalItem, int row, int column) {
+        int slot = row * 9 + column;
         if (row < 0 || column < 0) {
             throw new RuntimeException("The row or column of a MeebisInventory cannot be less than 0.");
         }
-
-        int slot = row * 9 + column;
+        if(slot > 54) {
+            throw new RuntimeException("The slot cannot be bigger than the actual MeebisInventory size of 54.");
+        }
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
         this.functionalItemsBySlot.put(slot, functionalItem);
         this.functionalItemList.add(functionalItem);
