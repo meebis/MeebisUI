@@ -96,16 +96,19 @@ public abstract class MeebisInventory {
             ignored.add(s.slot());
         }
 
-        for (int i = 0; i < pageSize; i++) {
-            int slot = startSlot + i;
+        int cleared = 0;
+        int slot = startSlot;
 
-            if (ignored.contains(slot)) continue;
-
-            this.bukkitInventory.setItem(slot, null);
-            this.functionalItemsBySlot.remove(slot);
+        while (cleared < pageSize) {
+            if (!ignored.contains(slot)) {
+                this.bukkitInventory.setItem(slot, this.pagination.backgroundItemSlot());
+                this.functionalItemsBySlot.remove(slot);
+                cleared++;
+            }
+            slot++;
         }
 
-        int slot = startSlot;
+        slot = startSlot;
 
         for (int itemIndex = startItem; itemIndex < endItem; itemIndex++) {
 
