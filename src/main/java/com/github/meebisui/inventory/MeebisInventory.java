@@ -83,28 +83,30 @@ public abstract class MeebisInventory {
     private void renderPagination() {
         if (this.pagination == null) return;
 
-        int start = this.pagination.startSlot().slot();
-        int end = start + this.pagination.pageSize();
         int page = this.pagination.currentPage();
 
-        for (int slot = start; slot < end; slot++) {
-            final int slotIndex = slot;
+        int inventorySlot = this.pagination.startSlot().slot();
+        int itemIndex = page * this.pagination.pageSize();
+        int placed = 0;
+
+        while (placed < this.pagination.pageSize()) {
+            final int slotIndex = inventorySlot++;
 
             boolean ignored = Arrays.stream(this.pagination.ignoredSlots())
                     .anyMatch(s -> s.slot() == slotIndex);
+
             if (ignored) continue;
 
             this.bukkitInventory.clear(slotIndex);
             this.functionalItemsBySlot.remove(slotIndex);
 
-            int itemIndex = (page * this.pagination.pageSize()) + (slotIndex - start);
-            List<FunctionalItem> items = this.pagination.functionalItems();
-
-            if (itemIndex < items.size()) {
-                FunctionalItem functionalItem = items.get(itemIndex);
+            if (itemIndex < this.pagination.functionalItems().size()) {
+                FunctionalItem functionalItem = this.pagination.functionalItems().get(itemIndex++);
                 this.bukkitInventory.setItem(slotIndex, functionalItem.itemStack());
                 this.functionalItemsBySlot.put(slotIndex, functionalItem);
             }
+
+            placed++;
         }
     }
 

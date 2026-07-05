@@ -38,6 +38,4 @@ public class Pagination {
     public int totalPages() {
         return (int) Math.ceil((double) functionalItems.size() / pageSize);
     }
-
-
 }
