@@ -107,8 +107,9 @@ public abstract class MeebisInventory {
                 if (backgroundItem != null) {
                     this.functionalItemsBySlot.put(slot, backgroundItem);
                 } else {
-                    // If the backgroundItem is null, which it freely can be, then it just doesnt have any action
-                    // And we also dont need any action, because if its null, then the slot is just Empty (AIR)
+                    // If the backgroundItem is null, which it freely can be, then it just doesn't have any action
+                    // and we also dont need any action, because if its null, then the slot is just Empty (AIR)
+                    // and we remove it from the map because else the next page in the pagination recognizes that slot
                     this.functionalItemsBySlot.remove(slot);
                 }
                 cleared++;
