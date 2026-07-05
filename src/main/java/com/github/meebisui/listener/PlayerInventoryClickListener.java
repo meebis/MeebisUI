@@ -20,9 +20,7 @@ public class PlayerInventoryClickListener implements Listener {
                 FunctionalItem functionalItem = meebisInventory.functionalItemAt(event.getSlot());
                 if (functionalItem == null) return;
 
-                if(functionalItem.type().equals(FunctionalItemType.CANCELLED)) {
-                    event.setCancelled(true);
-                }
+                event.setCancelled(!functionalItem.type().equals(FunctionalItemType.TAKEABLE));
 
                 if(functionalItem.type().equals(FunctionalItemType.ACTIONABLE)) {
                     functionalItem.clickAction().accept(player);

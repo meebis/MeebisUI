@@ -48,7 +48,7 @@ public class FunctionalItem {
 
     /**
      * FunctionalItem with a itemStack and NO player action.
-     * This item can later be taken out of the inventory
+     * This item cannot be taken out of the inventory
      *
      * @param itemStack the itemStack, cannot be null
      * @return a FunctionalItem instance with empty clickAction
