@@ -83,40 +83,22 @@ public abstract class MeebisInventory {
     private void renderPagination() {
         if (this.pagination == null) return;
 
-        List<FunctionalItem> items = this.pagination.functionalItems();
-        if (items == null || items.isEmpty()) return;
+        int slot = this.pagination.startSlot().slot();
+        int startItem = this.pagination.currentPage() * this.pagination.pageSize();
+        int endItem = Math.min(startItem + this.pagination.pageSize(), this.pagination.functionalItems().size());
 
-        int page = this.pagination.currentPage();
-        int pageStart = page * this.pagination.pageSize();
-
-        if (pageStart >= items.size()) return;
-
-        int itemsOnPage = Math.min(this.pagination.pageSize(), items.size() - pageStart);
-
-        int inventorySlot = this.pagination.startSlot().slot();
-        int itemIndex = pageStart;
-        int placed = 0;
-
-        while (placed < this.pagination.pageSize() && inventorySlot < rows * 9) {
-            final int slotIndex = inventorySlot++;
-
-            boolean ignored = Arrays.stream(this.pagination.ignoredSlots())
-                    .anyMatch(s -> s.slot() == slotIndex);
-
-            if (ignored) {
-                continue;
+        for (int itemIndex = startItem; itemIndex < endItem; itemIndex++) {
+            int finalSlot = slot;
+            while (Arrays.stream(this.pagination.ignoredSlots()).anyMatch(s -> s.slot() == finalSlot)) {
+                slot++;
             }
 
-            this.bukkitInventory.clear(slotIndex);
-            this.functionalItemsBySlot.remove(slotIndex);
+            FunctionalItem item = this.pagination.functionalItems().get(itemIndex);
 
-            if (placed < itemsOnPage) {
-                FunctionalItem functionalItem = items.get(itemIndex++);
-                this.bukkitInventory.setItem(slotIndex, functionalItem.itemStack());
-                this.functionalItemsBySlot.put(slotIndex, functionalItem);
-            }
+            this.bukkitInventory.setItem(slot, item.itemStack());
+            this.functionalItemsBySlot.put(slot, item);
 
-            placed++;
+            slot++;
         }
     }
 
@@ -129,7 +111,6 @@ public abstract class MeebisInventory {
     }
 
     public boolean isFunctionalItem(ItemStack itemStack) {
-        return this.functionalItemsBySlot.values().stream()
-                .anyMatch(functionalItem -> functionalItem.itemStack().equals(itemStack));
+        return this.functionalItemsBySlot.values().stream().anyMatch(functionalItem -> functionalItem.itemStack().equals(itemStack));
     }
 }
