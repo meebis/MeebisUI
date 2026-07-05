@@ -1,6 +1,7 @@
 package com.github.meebisui.inventory.pagination;
 
 import com.github.meebisui.inventory.item.FunctionalItem;
+import com.github.meebisui.inventory.slot.Slot;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,15 +11,15 @@ import java.util.List;
 
 @Getter
 @Setter
+@Accessors(fluent = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors(fluent = true)
 public class Pagination {
 
     /**
      * The start slot of where the pagination should start
      */
-    private int startSlot;
+    private Slot startSlot;
     /**
      * The size of how many items should be display per page
      */
@@ -39,4 +40,7 @@ public class Pagination {
     public int totalPages() {
         return (int) Math.ceil((double) functionalItems.size() / pageSize);
     }
+
+
+
 }

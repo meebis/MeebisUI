@@ -72,6 +72,8 @@ public abstract class MeebisInventory {
         if (this.pagination.pageSize() < 1) {
             throw new RuntimeException("A pagination's pageSize cannot be smaller than 1");
         }
+
+        this.renderPagination();
     }
 
     public void refreshPagination() {
@@ -81,7 +83,7 @@ public abstract class MeebisInventory {
     private void renderPagination() {
         if (this.pagination == null) return;
 
-        int start = this.pagination.startSlot();
+        int start = this.pagination.startSlot().slot();
         int end = start + this.pagination.pageSize();
         int page = this.pagination.currentPage();
 
