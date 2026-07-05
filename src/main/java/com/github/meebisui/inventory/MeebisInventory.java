@@ -4,6 +4,7 @@ import com.github.meebisui.MeebisUI;
 import com.github.meebisui.inventory.item.FunctionalItem;
 import com.github.meebisui.inventory.pagination.Pagination;
 import com.github.meebisui.inventory.slot.Slot;
+import com.github.meebisui.utility.Pair;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -132,6 +133,48 @@ public abstract class MeebisInventory {
 
             slot++;
         }
+    }
+
+    /**
+     * The page indicators can be used with a pagination
+     * so players can use two items (previous and next) to switch
+     * to the next pagination page.
+     */
+    public void withPageIndicator(Pair<Slot, ItemStack> previous, Pair<Slot, ItemStack> next) {
+        if(this.pagination == null) {
+            throw new RuntimeException("Cannot set page indicators when no pagination is set");
+        }
+
+        FunctionalItem previousItem = FunctionalItem.of(previous.second(), event -> {
+            if (pagination.currentPage() <= 0) {
+                return;
+            }
+            pagination.currentPage(pagination.currentPage() - 1);
+            this. refreshPagination();
+        });
+
+
+        FunctionalItem nextItem = FunctionalItem.of(next.second(), event -> {
+            if (pagination.currentPage() + 1 >= pagination.totalPages()) {
+                return;
+            }
+            pagination.currentPage(pagination.currentPage() + 1);
+            this.refreshPagination();
+        });
+
+        this.bukkitInventory.setItem(previous.first().slot(), previousItem.itemStack());
+        this.functionalItemsBySlot.put(previous.first().slot(), previousItem);
+
+        this.bukkitInventory.setItem(next.first().slot(), nextItem.itemStack());
+        this.functionalItemsBySlot.put(next.first().slot(), nextItem);
+    }
+
+
+    public void updateItemAt(int slot) {
+        FunctionalItem functionalItem = this.functionalItemAt(slot);
+        if (functionalItem == null) return;
+
+        this.bukkitInventory.setItem(slot, functionalItem.itemStack());
     }
 
     public FunctionalItem functionalItemAt(int slot) {
