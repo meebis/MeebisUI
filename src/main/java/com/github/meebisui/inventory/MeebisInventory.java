@@ -81,15 +81,11 @@ public abstract class MeebisInventory {
         this.functionalItemList.add(functionalItem);
     }
 
-    public void fillInventory(@NotNull ItemStack itemStack) {
-        for (int i = 0; i < rows * 9; i++) {
-            this.bukkitInventory.setItem(i, itemStack);
-        }
-    }
-
     public void fillInventory(@NotNull FunctionalItem functionalItem) {
         for (int i = 0; i < rows * 9; i++) {
             this.bukkitInventory.setItem(i, functionalItem.itemStack());
+            this.functionalItemsBySlot.put(i, functionalItem);
+            this.functionalItemList.add(functionalItem);
         }
     }
 
