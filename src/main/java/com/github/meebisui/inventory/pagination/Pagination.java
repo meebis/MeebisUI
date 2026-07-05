@@ -12,8 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(fluent = true)
-@AllArgsConstructor
-@NoArgsConstructor
 public class Pagination {
 
     /**
@@ -35,12 +33,11 @@ public class Pagination {
     /**
      * The slots what items are ignored when being displayed
      */
-    private Slot[] ignoredSlots = new Slot[]{};
+    private Slot[] ignoredSlots = new Slot[0];
 
     public int totalPages() {
         return (int) Math.ceil((double) functionalItems.size() / pageSize);
     }
-
 
 
 }
