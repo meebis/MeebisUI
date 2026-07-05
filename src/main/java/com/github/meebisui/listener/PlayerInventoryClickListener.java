@@ -23,7 +23,7 @@ public class PlayerInventoryClickListener implements Listener {
                 event.setCancelled(!functionalItem.type().equals(FunctionalItemType.TAKEABLE));
 
                 if(functionalItem.type().equals(FunctionalItemType.ACTIONABLE)) {
-                    functionalItem.clickAction().accept(player);
+                    functionalItem.clickAction().accept(event);
                 }
             }
         }

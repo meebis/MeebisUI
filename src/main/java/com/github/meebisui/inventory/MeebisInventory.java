@@ -101,7 +101,7 @@ public abstract class MeebisInventory {
         while (cleared < pageSize) {
             if (!ignored.contains(slot)) {
                 this.bukkitInventory.setItem(slot, this.pagination.backgroundItem().itemStack());
-                this.functionalItemsBySlot.remove(slot);
+                //this.functionalItemsBySlot.remove(slot);
                 cleared++;
             }
             slot++;
