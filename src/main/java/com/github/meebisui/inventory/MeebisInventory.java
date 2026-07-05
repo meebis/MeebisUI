@@ -3,6 +3,7 @@ package com.github.meebisui.inventory;
 import com.github.meebisui.MeebisUI;
 import com.github.meebisui.inventory.item.FunctionalItem;
 import com.github.meebisui.inventory.pagination.Pagination;
+import com.github.meebisui.inventory.slot.Slot;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -85,11 +86,20 @@ public abstract class MeebisInventory {
 
         int slot = this.pagination.startSlot().slot();
         int startItem = this.pagination.currentPage() * this.pagination.pageSize();
-        int endItem = Math.min(startItem + this.pagination.pageSize(), this.pagination.functionalItems().size());
+
+        int endItem = Math.min(
+                startItem + this.pagination.pageSize(),
+                this.pagination.functionalItems().size()
+        );
+
+        Set<Integer> ignored = new HashSet<>();
+        for (Slot s : this.pagination.ignoredSlots()) {
+            ignored.add(s.slot());
+        }
 
         for (int itemIndex = startItem; itemIndex < endItem; itemIndex++) {
-            int finalSlot = slot;
-            while (Arrays.stream(this.pagination.ignoredSlots()).anyMatch(s -> s.slot() == finalSlot)) {
+
+            while (ignored.contains(slot)) {
                 slot++;
             }
 
