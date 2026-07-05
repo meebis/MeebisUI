@@ -177,10 +177,12 @@ public abstract class MeebisInventory {
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
     }
 
-    public void updateItemAt(Slot slot, FunctionalItem functionalItem) {
+    public void updateItemAt(Slot slot, ItemStack itemStack) {
+        FunctionalItem functionalItem = this.functionalItemAt(slot.slot());
         if (functionalItem == null) return;
 
-        this.bukkitInventory.setItem(slot.slot(), functionalItem.itemStack());
+        this.bukkitInventory.setItem(slot.slot(), itemStack);
+        this.functionalItemsBySlot.put(slot.slot(), FunctionalItem.of(itemStack, functionalItem.clickAction()));
     }
 
     public FunctionalItem functionalItemAt(int slot) {
