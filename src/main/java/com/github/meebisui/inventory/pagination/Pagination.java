@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
 import java.util.List;
 
 @Getter
@@ -36,4 +35,8 @@ public class Pagination {
      * The slots what items are ignored when being displayed
      */
     private int[] ignoredSlots;
+
+    public int totalPages() {
+        return (int) Math.ceil((double) functionalItems.size() / pageSize);
+    }
 }

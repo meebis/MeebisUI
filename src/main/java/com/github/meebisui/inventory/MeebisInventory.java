@@ -34,32 +34,7 @@ public abstract class MeebisInventory {
             MeebisUI.INSTANCE().meebisInventoryTrack().remove(player);
         }
 
-        if (this.pagination != null) {
-            int start = this.pagination.startSlot();
-            int end = start + this.pagination.pageSize();
-            int page = this.pagination.currentPage();
-
-            for (int slot = start; slot < end; slot++) {
-                final int slotIndex = slot;
-
-                boolean ignored = Arrays.stream(this.pagination.ignoredSlots())
-                        .anyMatch(s -> s == slotIndex);
-                if (ignored) continue;
-
-                this.bukkitInventory.clear(slotIndex);
-                this.functionalItemsBySlot.remove(slotIndex);
-
-                int itemIndex = (page * this.pagination.pageSize()) + (slotIndex - start);
-                List<FunctionalItem> items = this.pagination.functionalItems();
-
-                if (itemIndex < items.size()) {
-                    FunctionalItem functionalItem = items.get(itemIndex);
-                    this.bukkitInventory.setItem(slotIndex, functionalItem.itemStack());
-                    this.functionalItemsBySlot.put(slotIndex, functionalItem);
-                    this.functionalItemList.add(functionalItem);
-                }
-            }
-        }
+        renderPagination();
 
         player.openInventory(this.bukkitInventory);
         MeebisUI.INSTANCE().meebisInventoryTrack().put(player, this);
@@ -75,8 +50,8 @@ public abstract class MeebisInventory {
         if (row < 0 || column < 0) {
             throw new RuntimeException("The row or column of a MeebisInventory cannot be less than 0.");
         }
-        if(slot > 54) {
-            throw new RuntimeException("The slot cannot be bigger than the actual MeebisInventory size of 54.");
+        if (slot >= rows * 9) {
+            throw new RuntimeException("The slot cannot be bigger than the actual MeebisInventory size.");
         }
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
         this.functionalItemsBySlot.put(slot, functionalItem);
@@ -96,6 +71,38 @@ public abstract class MeebisInventory {
 
         if (this.pagination.pageSize() < 1) {
             throw new RuntimeException("A pagination's pageSize cannot be smaller than 1");
+        }
+    }
+
+    public void refreshPagination() {
+        renderPagination();
+    }
+
+    private void renderPagination() {
+        if (this.pagination == null) return;
+
+        int start = this.pagination.startSlot();
+        int end = start + this.pagination.pageSize();
+        int page = this.pagination.currentPage();
+
+        for (int slot = start; slot < end; slot++) {
+            final int slotIndex = slot;
+
+            boolean ignored = Arrays.stream(this.pagination.ignoredSlots())
+                    .anyMatch(s -> s == slotIndex);
+            if (ignored) continue;
+
+            this.bukkitInventory.clear(slotIndex);
+            this.functionalItemsBySlot.remove(slotIndex);
+
+            int itemIndex = (page * this.pagination.pageSize()) + (slotIndex - start);
+            List<FunctionalItem> items = this.pagination.functionalItems();
+
+            if (itemIndex < items.size()) {
+                FunctionalItem functionalItem = items.get(itemIndex);
+                this.bukkitInventory.setItem(slotIndex, functionalItem.itemStack());
+                this.functionalItemsBySlot.put(slotIndex, functionalItem);
+            }
         }
     }
 
