@@ -5,12 +5,15 @@ import com.github.meebisui.inventory.item.FunctionalItem;
 import com.github.meebisui.inventory.pagination.Pagination;
 import com.github.meebisui.inventory.slot.Slot;
 import com.github.meebisui.utility.Pair;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -21,7 +24,7 @@ public abstract class MeebisInventory {
     private final Component title;
     private final int rows;
     private final Inventory bukkitInventory;
-    private final List<FunctionalItem> functionalItemList = new ArrayList<>();
+    //private final List<FunctionalItem> functionalItemList = new ArrayList<>();
     private final Map<Integer, FunctionalItem> functionalItemsBySlot = new HashMap<>();
     private Pagination pagination;
 
@@ -57,14 +60,12 @@ public abstract class MeebisInventory {
         }
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
         this.functionalItemsBySlot.put(slot, functionalItem);
-        this.functionalItemList.add(functionalItem);
     }
 
     public void fillInventory(@NotNull FunctionalItem functionalItem) {
         for (int i = 0; i < rows * 9; i++) {
             this.bukkitInventory.setItem(i, functionalItem.itemStack());
             this.functionalItemsBySlot.put(i, functionalItem);
-            this.functionalItemList.add(functionalItem);
         }
     }
 
@@ -169,7 +170,7 @@ public abstract class MeebisInventory {
         this.functionalItemsBySlot.put(next.first().slot(), nextItem);
     }
 
-
+    @Deprecated
     public void updateItemAt(int slot) {
         FunctionalItem functionalItem = this.functionalItemAt(slot);
         if (functionalItem == null) return;
@@ -177,12 +178,36 @@ public abstract class MeebisInventory {
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
     }
 
+    @Deprecated
     public void updateItemAt(Slot slot, ItemStack itemStack) {
         FunctionalItem functionalItem = this.functionalItemAt(slot.slot());
         if (functionalItem == null) return;
 
         this.bukkitInventory.setItem(slot.slot(), itemStack);
         this.functionalItemsBySlot.put(slot.slot(), FunctionalItem.of(itemStack, functionalItem.clickAction()));
+    }
+
+    @ApiStatus.Experimental
+    @SuppressWarnings("ALL")
+    public void updateItemLore(Slot slot, List<Component> lore) {
+        FunctionalItem functionalItem = this.functionalItemAt(slot.slot());
+        if (functionalItem == null) return;
+
+        ItemStack itemStack = functionalItem.itemStack();
+        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+
+        this.bukkitInventory.setItem(slot.slot(), itemStack);
+    }
+
+    @ApiStatus.Experimental
+    @SuppressWarnings("ALL")
+    public void updateItemLore(FunctionalItem functionalItem, Slot slot, List<Component> lore) {
+        if (functionalItem == null) return;
+
+        ItemStack itemStack = functionalItem.itemStack();
+        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+
+        this.bukkitInventory.setItem(slot.slot(), itemStack);
     }
 
     public FunctionalItem functionalItemAt(int slot) {
