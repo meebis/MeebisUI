@@ -7,6 +7,7 @@ import com.github.meebisui.inventory.slot.Slot;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -87,10 +88,7 @@ public abstract class MeebisInventory {
         int slot = this.pagination.startSlot().slot();
         int startItem = this.pagination.currentPage() * this.pagination.pageSize();
 
-        int endItem = Math.min(
-                startItem + this.pagination.pageSize(),
-                this.pagination.functionalItems().size()
-        );
+        int endItem = Math.min(startItem + this.pagination.pageSize(), this.pagination.functionalItems().size());
 
         Set<Integer> ignored = new HashSet<>();
         for (Slot s : this.pagination.ignoredSlots()) {
@@ -102,6 +100,8 @@ public abstract class MeebisInventory {
             while (ignored.contains(slot)) {
                 slot++;
             }
+
+            this.bukkitInventory.setItem(slot, new ItemStack(Material.AIR));
 
             FunctionalItem item = this.pagination.functionalItems().get(itemIndex);
 
