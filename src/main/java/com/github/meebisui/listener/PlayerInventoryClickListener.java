@@ -19,6 +19,11 @@ public class PlayerInventoryClickListener implements Listener {
             if (meebisInventory != null && meebisInventory.isMeebisInventory(event.getView().title())) {
                 FunctionalItem functionalItem = meebisInventory.functionalItemAt(event.getSlot());
                 if (functionalItem == null) return;
+                if(event.getCurrentItem() == null) return;
+
+                if(!event.getCurrentItem().equals(functionalItem.itemStack())) {
+                    return;
+                }
 
                 event.setCancelled(!functionalItem.type().equals(FunctionalItemType.TAKEABLE));
 
