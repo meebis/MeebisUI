@@ -35,7 +35,7 @@ public class Pagination {
     /**
      * The slots what items are ignored when being displayed
      */
-    private int[] ignoredSlots;
+    private int[] ignoredSlots = new int[]{};
 
     public int totalPages() {
         return (int) Math.ceil((double) functionalItems.size() / pageSize);
