@@ -100,8 +100,17 @@ public abstract class MeebisInventory {
 
         while (cleared < pageSize) {
             if (!ignored.contains(slot)) {
-                this.bukkitInventory.setItem(slot, this.pagination.backgroundItem().itemStack());
-                //this.functionalItemsBySlot.remove(slot);
+                FunctionalItem backgroundItem = this.pagination.backgroundItem();
+                this.bukkitInventory.setItem(slot, backgroundItem != null ? backgroundItem.itemStack() : null);
+                // So if the backgroundItem is not null, we need to store its functionalItem in our map
+                // in order for our PlayerInventoryClickListener to work and listen for certain actions on that slot.
+                if (backgroundItem != null) {
+                    this.functionalItemsBySlot.put(slot, backgroundItem);
+                } else {
+                    // If the backgroundItem is null, which it freely can be, then it just doesnt have any action
+                    // And we also dont need any action, because if its null, then the slot is just Empty (AIR)
+                    this.functionalItemsBySlot.remove(slot);
+                }
                 cleared++;
             }
             slot++;

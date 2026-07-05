@@ -2,7 +2,6 @@ package com.github.meebisui.inventory.item;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;

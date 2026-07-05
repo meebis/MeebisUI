@@ -5,7 +5,6 @@ import com.github.meebisui.listener.PlayerInventoryClickListener;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +23,13 @@ public class MeebisUI {
         INSTANCE = this;
     }
 
+    public static MeebisUI INSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new MeebisUI();
+        }
+        return INSTANCE;
+    }
+
     /**
      * This needs to be called at some point
      * in order to initialize the MeebisUI
@@ -34,12 +40,5 @@ public class MeebisUI {
      */
     public void loadPlugin(@NotNull JavaPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(), plugin);
-    }
-
-    public static MeebisUI INSTANCE() {
-        if(INSTANCE == null) {
-            INSTANCE = new MeebisUI();
-        }
-        return INSTANCE;
     }
 }

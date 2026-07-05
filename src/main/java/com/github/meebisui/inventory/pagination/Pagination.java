@@ -49,7 +49,7 @@ public class Pagination {
      * the other 3 slots to be glass panes too instead of empty (AIR).
      * <p>
      * If not defined, the other 3 slots are going to be empty (AIR)!
-     *
+     * <p>
      * This is a FunctionalItem aswell, so you need to define the correct
      * FunctionalItemType so players cant take out the item.
      */

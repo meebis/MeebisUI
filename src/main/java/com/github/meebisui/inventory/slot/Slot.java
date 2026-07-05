@@ -4,6 +4,7 @@ public record Slot(int slot) {
 
     /**
      * Returns a Slot with direct bukkit inventory slot parameter
+     *
      * @param slot 0-54 in the biggest inventory
      */
     public static Slot slot(int slot) {
