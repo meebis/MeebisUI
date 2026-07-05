@@ -20,7 +20,7 @@ public class MeebisUI {
     private final Map<Player, MeebisInventory> meebisInventoryTrack = Maps.newHashMap();
 
     public MeebisUI() {
-        INSTANCE = new MeebisUI();
+        INSTANCE = this;
     }
 
     /**
