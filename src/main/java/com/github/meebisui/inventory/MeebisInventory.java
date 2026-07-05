@@ -85,23 +85,33 @@ public abstract class MeebisInventory {
     private void renderPagination() {
         if (this.pagination == null) return;
 
-        int slot = this.pagination.startSlot().slot();
-        int startItem = this.pagination.currentPage() * this.pagination.pageSize();
+        int startSlot = this.pagination.startSlot().slot();
+        int pageSize = this.pagination.pageSize();
 
-        int endItem = Math.min(startItem + this.pagination.pageSize(), this.pagination.functionalItems().size());
+        int startItem = this.pagination.currentPage() * pageSize;
+        int endItem = Math.min(startItem + pageSize, this.pagination.functionalItems().size());
 
         Set<Integer> ignored = new HashSet<>();
         for (Slot s : this.pagination.ignoredSlots()) {
             ignored.add(s.slot());
         }
 
+        for (int i = 0; i < pageSize; i++) {
+            int slot = startSlot + i;
+
+            if (ignored.contains(slot)) continue;
+
+            this.bukkitInventory.setItem(slot, null);
+            this.functionalItemsBySlot.remove(slot);
+        }
+
+        int slot = startSlot;
+
         for (int itemIndex = startItem; itemIndex < endItem; itemIndex++) {
 
             while (ignored.contains(slot)) {
                 slot++;
             }
-
-            this.bukkitInventory.setItem(slot, new ItemStack(Material.AIR));
 
             FunctionalItem item = this.pagination.functionalItems().get(itemIndex);
 
