@@ -177,8 +177,7 @@ public abstract class MeebisInventory {
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
     }
 
-    public void updateItemAt(Slot slot) {
-        FunctionalItem functionalItem = this.functionalItemAt(slot.slot());
+    public void updateItemAt(Slot slot, FunctionalItem functionalItem) {
         if (functionalItem == null) return;
 
         this.bukkitInventory.setItem(slot.slot(), functionalItem.itemStack());
