@@ -87,6 +87,12 @@ public abstract class MeebisInventory {
         }
     }
 
+    public void fillInventory(@NotNull FunctionalItem functionalItem) {
+        for (int i = 0; i < rows * 9; i++) {
+            this.bukkitInventory.setItem(i, functionalItem.itemStack());
+        }
+    }
+
     public void withPagination(@NotNull Pagination pagination) {
         this.pagination = pagination;
 
