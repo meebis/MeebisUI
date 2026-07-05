@@ -142,7 +142,7 @@ public abstract class MeebisInventory {
      * to the next pagination page.
      */
     public void withPageIndicator(Pair<Slot, ItemStack> previous, Pair<Slot, ItemStack> next) {
-        if(this.pagination == null) {
+        if (this.pagination == null) {
             throw new RuntimeException("Cannot set page indicators when no pagination is set");
         }
 
@@ -151,7 +151,7 @@ public abstract class MeebisInventory {
                 return;
             }
             pagination.currentPage(pagination.currentPage() - 1);
-            this. refreshPagination();
+            this.refreshPagination();
         });
 
 
@@ -170,7 +170,7 @@ public abstract class MeebisInventory {
         this.functionalItemsBySlot.put(next.first().slot(), nextItem);
     }
 
-    @Deprecated
+    @ApiStatus.Experimental
     public void updateItemAt(int slot) {
         FunctionalItem functionalItem = this.functionalItemAt(slot);
         if (functionalItem == null) return;
@@ -178,7 +178,6 @@ public abstract class MeebisInventory {
         this.bukkitInventory.setItem(slot, functionalItem.itemStack());
     }
 
-    @Deprecated
     public void updateItemAt(Slot slot, ItemStack itemStack) {
         FunctionalItem functionalItem = this.functionalItemAt(slot.slot());
         if (functionalItem == null) return;
