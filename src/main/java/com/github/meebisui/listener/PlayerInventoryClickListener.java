@@ -3,6 +3,7 @@ package com.github.meebisui.listener;
 import com.github.meebisui.MeebisUI;
 import com.github.meebisui.inventory.MeebisInventory;
 import com.github.meebisui.inventory.item.FunctionalItem;
+import com.github.meebisui.inventory.item.FunctionalItemType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +20,13 @@ public class PlayerInventoryClickListener implements Listener {
                 FunctionalItem functionalItem = meebisInventory.functionalItemAt(event.getSlot());
                 if (functionalItem == null) return;
 
-                functionalItem.clickAction().accept(player);
+                if(functionalItem.type().equals(FunctionalItemType.CANCELLED)) {
+                    event.setCancelled(true);
+                }
+
+                if(functionalItem.type().equals(FunctionalItemType.ACTIONABLE)) {
+                    functionalItem.clickAction().accept(player);
+                }
             }
         }
     }

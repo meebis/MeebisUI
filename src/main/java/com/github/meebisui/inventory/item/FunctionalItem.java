@@ -14,10 +14,12 @@ public class FunctionalItem {
 
     private final ItemStack itemStack;
     private final Consumer<Player> clickAction;
+    private final FunctionalItemType type;
 
-    private FunctionalItem(ItemStack itemStack, Consumer<Player> clickAction) {
+    private FunctionalItem(ItemStack itemStack, Consumer<Player> clickAction, FunctionalItemType type) {
         this.itemStack = itemStack;
         this.clickAction = clickAction;
+        this.type = type;
     }
 
     /**
@@ -30,7 +32,7 @@ public class FunctionalItem {
      * @return a FunctionalItem instance with given clickAction
      */
     public static FunctionalItem of(@NotNull ItemStack itemStack, @NotNull Consumer<Player> clickAction) {
-        return new FunctionalItem(itemStack, clickAction);
+        return new FunctionalItem(itemStack, clickAction, FunctionalItemType.ACTIONABLE);
     }
 
     /**
@@ -41,6 +43,17 @@ public class FunctionalItem {
      * @return a FunctionalItem instance with empty clickAction
      */
     public static FunctionalItem ofEmpty(@NotNull ItemStack itemStack) {
-        return new FunctionalItem(itemStack, null);
+        return new FunctionalItem(itemStack, null, FunctionalItemType.TAKEABLE);
+    }
+
+    /**
+     * FunctionalItem with a itemStack and NO player action.
+     * This item can later be taken out of the inventory
+     *
+     * @param itemStack the itemStack, cannot be null
+     * @return a FunctionalItem instance with empty clickAction
+     */
+    public static FunctionalItem ofCancelled(@NotNull ItemStack itemStack) {
+        return new FunctionalItem(itemStack, null, FunctionalItemType.CANCELLED);
     }
 }
