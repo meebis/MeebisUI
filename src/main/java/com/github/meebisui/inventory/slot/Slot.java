@@ -7,14 +7,14 @@ public record Slot(int slot) {
      *
      * @param slot 0-54 in the biggest inventory
      */
-    public static Slot slot(int slot) {
+    public static Slot of(int slot) {
         return new Slot(slot);
     }
 
     /**
      * Returns a slot with the row and column specified parameter
      */
-    public static Slot slot(int row, int column) {
+    public static Slot of(int row, int column) {
         return new Slot(row * 9 + column);
     }
 }
