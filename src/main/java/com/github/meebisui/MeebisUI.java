@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -26,9 +27,12 @@ public class MeebisUI {
     /**
      * This needs to be called at some point
      * in order to initialize the MeebisUI
-     * @param plugin
+     * <p>
+     * Best way to call this in the used plugins #onEnable
+     *
+     * @param plugin the plugin instance, cannot be null
      */
-    public void loadPlugin(JavaPlugin plugin) {
+    public void loadPlugin(@NotNull JavaPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(), plugin);
     }
 
