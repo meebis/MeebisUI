@@ -7,7 +7,6 @@ import com.github.meebisui.inventory.slot.Slot;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -101,7 +100,7 @@ public abstract class MeebisInventory {
 
         while (cleared < pageSize) {
             if (!ignored.contains(slot)) {
-                this.bukkitInventory.setItem(slot, this.pagination.backgroundItemSlot());
+                this.bukkitInventory.setItem(slot, this.pagination.backgroundItem().itemStack());
                 this.functionalItemsBySlot.remove(slot);
                 cleared++;
             }

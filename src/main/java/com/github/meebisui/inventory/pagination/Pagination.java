@@ -2,12 +2,9 @@ package com.github.meebisui.inventory.pagination;
 
 import com.github.meebisui.inventory.item.FunctionalItem;
 import com.github.meebisui.inventory.slot.Slot;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -52,8 +49,11 @@ public class Pagination {
      * the other 3 slots to be glass panes too instead of empty (AIR).
      * <p>
      * If not defined, the other 3 slots are going to be empty (AIR)!
+     *
+     * This is a FunctionalItem aswell, so you need to define the correct
+     * FunctionalItemType so players cant take out the item.
      */
-    private ItemStack backgroundItemSlot;
+    private FunctionalItem backgroundItem;
 
     public int totalPages() {
         return (int) Math.ceil((double) functionalItems.size() / pageSize);
