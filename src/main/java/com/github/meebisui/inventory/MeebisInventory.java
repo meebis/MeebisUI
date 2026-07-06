@@ -39,7 +39,9 @@ public abstract class MeebisInventory {
             MeebisUI.INSTANCE().meebisInventoryTrack().remove(player);
         }
 
-        renderPagination();
+        if (this.pagination != null) {
+            this.addPagination();
+        }
 
         player.openInventory(this.bukkitInventory);
         MeebisUI.INSTANCE().meebisInventoryTrack().put(player, this);
@@ -76,14 +78,14 @@ public abstract class MeebisInventory {
             throw new RuntimeException("A pagination's pageSize cannot be smaller than 1");
         }
 
-        this.renderPagination();
+        this.addPagination();
     }
 
     public void refreshPagination() {
-        renderPagination();
+        addPagination();
     }
 
-    private void renderPagination() {
+    private void addPagination() {
         if (this.pagination == null) return;
 
         int startSlot = this.pagination.startSlot().slot();
@@ -188,6 +190,11 @@ public abstract class MeebisInventory {
 
     @ApiStatus.Experimental
     @SuppressWarnings("ALL")
+    /**
+     * This is marked as Experimental because it uses
+     * the paper's new component system to update a items lore
+     * instead of just modifying the itemMeta of the item.
+     */
     public void updateItemLore(Slot slot, List<Component> lore) {
         FunctionalItem functionalItem = this.functionalItemAt(slot.slot());
         if (functionalItem == null) return;
@@ -200,6 +207,11 @@ public abstract class MeebisInventory {
 
     @ApiStatus.Experimental
     @SuppressWarnings("ALL")
+    /**
+     * This is marked as Experimental because it uses
+     * the paper's new component system to update a items lore
+     * instead of just modifying the itemMeta of the item.
+     */
     public void updateItemLore(FunctionalItem functionalItem, Slot slot, List<Component> lore) {
         if (functionalItem == null) return;
 

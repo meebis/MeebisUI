@@ -17,6 +17,7 @@ public class MeebisUI {
 
     private static MeebisUI INSTANCE;
 
+    /* Currently we dont really need this map, buts its a good practice that we keep a track if we need it later.*/
     private final Map<Player, MeebisInventory> meebisInventoryTrack = Maps.newHashMap();
 
     public MeebisUI() {
@@ -32,7 +33,9 @@ public class MeebisUI {
 
     /**
      * This needs to be called at some point
-     * in order to initialize the MeebisUI
+     * in order to initialize the MeebisUI because
+     * it doesn't have its own JavaPlugin instance and needs to be
+     * attached to a not null JavaPlugin instance.
      * <p>
      * Best way to call this in the used plugins #onEnable
      *
