@@ -68,9 +68,6 @@ public abstract class MeebisInventory {
         if (slot.slot() < 0 || slot.slot() > this.rows * 9) {
             throw new RuntimeException("The slot of a MeebisInventory cannot be less than 0 or greater than the actual MeebisInventory size.");
         }
-        if (slot.slot() >= rows * 9) {
-            throw new RuntimeException("The slot cannot be bigger than the actual MeebisInventory size.");
-        }
         this.bukkitInventory.setItem(slot.slot(), functionalItem.itemStack());
         this.functionalItemsBySlot.put(slot.slot(), functionalItem);
     }
