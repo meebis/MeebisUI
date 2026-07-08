@@ -72,10 +72,34 @@ public abstract class MeebisInventory {
         this.functionalItemsBySlot.put(slot.slot(), functionalItem);
     }
 
-    public void fillInventory(@NotNull FunctionalItem functionalItem) {
-        for (int i = 0; i < rows * 9; i++) {
-            this.bukkitInventory.setItem(i, functionalItem.itemStack());
-            this.functionalItemsBySlot.put(i, functionalItem);
+    public void fillInventory(@NotNull InventoryFillType fillType, @NotNull FunctionalItem functionalItem) {
+        switch (fillType) {
+            case ALL -> {
+                for (int row = 0; row < rows; row++) {
+                    for (int column = 0; column < 9; column++) {
+                        withItem(functionalItem, row, column);
+                    }
+                }
+            }
+
+            case LEFT_SIDE -> {
+                for (int row = 0; row < rows; row++) {
+                    withItem(functionalItem, row, 0);
+                }
+            }
+
+            case RIGHT_SIDE -> {
+                for (int row = 0; row < rows; row++) {
+                    withItem(functionalItem, row, 8);
+                }
+            }
+
+            case CORNERS -> {
+                withItem(functionalItem, 0, 0);
+                withItem(functionalItem, 0, 8);
+                withItem(functionalItem, rows - 1, 0);
+                withItem(functionalItem, rows - 1, 8);
+            }
         }
     }
 

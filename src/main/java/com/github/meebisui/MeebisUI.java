@@ -32,10 +32,8 @@ public class MeebisUI {
     }
 
     /**
-     * This needs to be called at some point
-     * in order to initialize the MeebisUI because
-     * it doesn't have its own JavaPlugin instance and needs to be
-     * attached to a not null JavaPlugin instance.
+     * This needs to be called so MeebisUI can attach
+     * to the used JavaPlugin, in order for the Bukkit Logic to work.
      * <p>
      * Best way to call this in the used plugins #onEnable
      *
