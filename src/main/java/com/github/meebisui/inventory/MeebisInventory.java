@@ -65,7 +65,7 @@ public abstract class MeebisInventory {
     }
 
     public void withItem(@NotNull FunctionalItem functionalItem, Slot slot) {
-        if (slot.slot() < 0 || slot.slot() > this.rows * 9) {
+        if (slot.slot() < 0 || slot.slot() >= this.rows * 9) {
             throw new RuntimeException("The slot of a MeebisInventory cannot be less than 0 or greater than the actual MeebisInventory size.");
         }
         this.bukkitInventory.setItem(slot.slot(), functionalItem.itemStack());
@@ -251,6 +251,25 @@ public abstract class MeebisInventory {
         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
 
         this.bukkitInventory.setItem(slot.slot(), itemStack);
+    }
+
+    /**
+     * This updates the given index in the paginations items.
+     *
+     * @param index the index
+     * @param functionalItem the new item
+     */
+    public void updatePaginationItem(int index, @NotNull FunctionalItem functionalItem) {
+        if (this.pagination == null) {
+            throw new IllegalStateException("Cannot update a pagination item when no pagination is set.");
+        }
+
+        if (index < 0 || index >= this.pagination.functionalItems().size()) {
+            throw new IndexOutOfBoundsException("Pagination index " + index + " is out of bounds.");
+        }
+
+        this.pagination.functionalItems().set(index, functionalItem);
+        this.refreshPagination();
     }
 
     public FunctionalItem functionalItemAt(int slot) {

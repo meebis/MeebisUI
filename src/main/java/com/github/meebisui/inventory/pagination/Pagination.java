@@ -27,6 +27,7 @@ public class Pagination {
     private int currentPage;
     /**
      * The items list of what should be displayed
+     * Needs to be a Mutable List!
      */
     private List<FunctionalItem> functionalItems;
     /**
