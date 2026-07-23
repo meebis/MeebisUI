@@ -182,6 +182,16 @@ public abstract class MeebisInventory {
     }
 
     /**
+     * Sets the itemStack directly at the bukkit inventory slot
+     * This ignores every behavior of the MeebisInventory
+     * @param slot the slot
+     * @param itemStack the itemStack
+     */
+    public void setItemAt(int slot, ItemStack itemStack) {
+        this.bukkitInventory.setItem(slot, itemStack);
+    }
+
+    /**
      * The page indicators can be used with a pagination
      * so players can use two items (previous and next) to switch
      * to the next pagination page.
