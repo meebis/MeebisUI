@@ -15,6 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -168,6 +169,16 @@ public abstract class MeebisInventory {
 
             slot++;
         }
+    }
+
+    /**
+     * Returns the ItemStack at that given Slot
+     * Can be null!
+     * @param slot the slot
+     * @return the itemStack or null
+     */
+    public @Nullable ItemStack getItemAt(int slot) {
+        return this.bukkitInventory.getItem(slot);
     }
 
     /**
